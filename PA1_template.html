@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Karol Cichewicz" />
+
+
+<title>PA1_template.Rmd</title>
+
+<script src="PA1_template_files/header-attrs-2.6/header-attrs.js"></script>
+<script src="PA1_template_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="PA1_template_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="PA1_template_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="PA1_template_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="PA1_template_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="PA1_template_files/navigation-1.1/tabsets.js"></script>
+<link href="PA1_template_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="PA1_template_files/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">PA1_template.Rmd</h1>
+<h4 class="author">Karol Cichewicz</h4>
+<h4 class="date">3/5/2021</h4>
+
+</div>
+
+
+<pre class="r"><code># Global R markdown code chunk options
+knitr::opts_chunk$set(message=FALSE, 
+                      warning = FALSE, 
+                      error=FALSE, 
+                      echo=TRUE, 
+                      cache=FALSE, 
+                      fig.width = 7, fig.height = 6, 
+                      fig.align = &#39;left&#39;)</code></pre>
+<div id="loading-and-preprocessing-the-data" class="section level1">
+<h1>1. Loading and preprocessing the data</h1>
+<pre class="r"><code>library(data.table)
+library(ggplot2)
+
+unzip(&quot;activity.zip&quot;)
+data &lt;- read.csv(&quot;activity.csv&quot;)
+
+# Converting to a data.table object, omitting missing values (NA)
+DT &lt;- data.table(na.omit(data))</code></pre>
+</div>
+<div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level1">
+<h1>2. What is mean total number of steps taken per day?</h1>
+<p>For this part of the assignment, you can ignore the missing values in the dataset.</p>
+<div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day" class="section level2">
+<h2>2.1 Make a histogram of the total number of steps taken each day</h2>
+<pre class="r"><code># sum(is.na(data$steps)) / length(data$steps) 13% of step records are missing 
+
+
+df &lt;- DT[, .(sum_of_steps_per_day = sum(steps)), by=list(date)]
+
+ggplot(df, aes(x=sum_of_steps_per_day))+
+    geom_histogram(bins = 26)+
+    theme_bw()+
+    labs(title = &quot;Histogram of the number of steps taken each day&quot;,
+         x = &quot;Sum of steps per day&quot;)+
+    theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="PA1_template_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day" class="section level2">
+<h2>2.2 Calculate and report the mean and median total number of steps taken per day</h2>
+<pre class="r"><code>mean_n_of_steps &lt;- mean(df$sum_of_steps_per_day)
+median_n_of_steps &lt;- median(df$sum_of_steps_per_day)</code></pre>
+<p>The mean number of steps taken each day is 10766.19, and the median is 10765</p>
+</div>
+</div>
+<div id="what-is-the-average-daily-activity-pattern" class="section level1">
+<h1>3. What is the average daily activity pattern?</h1>
+<div id="time-series-plot-of-the-average-number-of-steps-taken-across-all-days" class="section level2">
+<h2>3.1 Time series plot of the average number of steps taken across all days</h2>
+<p>Make a time series plot (i.e. type = “l”) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)</p>
+<pre class="r"><code>df &lt;- DT[, .(mean_steps = mean(steps)), by=list(interval)]
+
+ggplot(df, aes(x = interval, y = mean_steps))+
+    geom_point()+
+    geom_line()+
+    theme_bw()+
+    labs(title = &quot;Time series plot of the average number of steps taken across all days&quot;,
+         x = &quot;Interval&quot;, 
+         y = &quot;Mean steps per interval&quot;)+
+    theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="PA1_template_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+<div id="which-5-minute-interval-on-average-across-all-the-days-in-the-dataset-contains-the-maximum-number-of-steps" class="section level2">
+<h2>3.2 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?</h2>
+<pre class="r"><code>as.numeric(df[which.max(df$mean_steps), 1])</code></pre>
+<p>On average, interval 835 contains the maximum number of steps.</p>
+</div>
+</div>
+<div id="imputing-missing-values" class="section level1">
+<h1>4. Imputing missing values</h1>
+<p>Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.</p>
+<div id="calculate-and-report-the-total-number-of-missing-values-in-the-dataset-i.e.-the-total-number-of-rows-with-nas" class="section level2">
+<h2>4.1 Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)</h2>
+<pre class="r"><code>sum(as.numeric((is.na(data))))</code></pre>
+<pre><code>## [1] 2304</code></pre>
+<p>The total number of rows containing NAs is 2304</p>
+</div>
+<div id="imputation-of-missing-data" class="section level2">
+<h2>4.2 Imputation of missing data</h2>
+<p>Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc</p>
+<pre class="r"><code># Calculates mean activity per interval, which will be used to fill in missing values
+df &lt;- DT[, .(mean_steps = mean(steps)), by=list(interval)]
+#sum(is.na(df)) # No NA values</code></pre>
+</div>
+<div id="create-a-new-dataset-that-is-equal-to-the-original-dataset-but-with-the-missing-data-filled-in." class="section level2">
+<h2>4.3 Create a new dataset that is equal to the original dataset but with the missing data filled in.</h2>
+<pre class="r"><code># Replaces missing values with mean interval values 
+data_imp &lt;- merge(data, df, by = &quot;interval&quot;, all.x = TRUE)
+data_imp$steps &lt;- ifelse(is.na(data_imp$steps), data_imp$mean_steps, data_imp$steps)
+
+#Sanity check. There are no missing values in the imputed dataset.
+sum(is.na(data_imp))</code></pre>
+<pre><code>## [1] 0</code></pre>
+</div>
+<div id="make-a-histogram-of-the-total-number-of-steps-taken-each-day-and-calculate-and-report-the-mean-and-median-total-number-of-steps-taken-per-day." class="section level2">
+<h2>4.4 Make a histogram of the total number of steps taken each day and calculate and report the mean and median total number of steps taken per day.</h2>
+<pre class="r"><code>DT &lt;- data.table(na.omit(data_imp))
+df &lt;- DT[, .(sum_of_steps_per_day = sum(steps)), by=list(date)]
+
+ggplot(df, aes(x=sum_of_steps_per_day))+
+    geom_histogram(bins = 26)+
+    theme_bw()+
+    labs(title = &quot;Histogram of the number of steps taken each day&quot;,
+         x = &quot;Sum of steps per day&quot;)+
+    theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="PA1_template_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto auto auto 0;" /></p>
+<pre class="r"><code>mean_n_of_steps_imp &lt;- mean(df$sum_of_steps_per_day)
+median_n_of_steps_imp &lt;- median(df$sum_of_steps_per_day)</code></pre>
+<p>The mean number of steps taken each day in the imputed data is 10766.19, and the median is 10766.19</p>
+<div id="do-these-values-differ-from-the-estimates-from-the-first-part-of-the-assignment" class="section level3">
+<h3>4.4.1 Do these values differ from the estimates from the first part of the assignment?</h3>
+<p>Only the median value is slightly different, and now is equal to the mean value. Overall, the process of data imputation did not have a major effect on the data.</p>
+</div>
+<div id="what-is-the-impact-of-imputing-missing-data-on-the-estimates-of-the-total-daily-number-of-steps" class="section level3">
+<h3>4.4.2 What is the impact of imputing missing data on the estimates of the total daily number of steps?</h3>
+<pre class="r"><code>DT &lt;- data.table(data)
+df &lt;- DT[, .(sum_of_steps_per_day = sum(steps)), by=list(date)]
+
+DT &lt;- data.table(data_imp)
+df_imp &lt;- DT[, .(sum_of_steps_per_day = sum(steps)), by=list(date)]
+
+df_merged &lt;- merge(df, df_imp, by = &quot;date&quot;, all.y = TRUE)
+colnames(df_merged) &lt;- c(&quot;date&quot;, &quot;sum_of_steps_per_day.raw&quot;, &quot;sum_of_steps_per_day.imputed&quot;)
+df_merged$Imputation &lt;- ifelse(is.na(df_merged$sum_of_steps_per_day.raw), &quot;Imputed daily value&quot;, &quot;Raw values&quot;)
+
+df_merged$sum_of_steps_per_day.raw &lt;- ifelse(is.na(df_merged$sum_of_steps_per_day.raw), 0 , df_merged$sum_of_steps_per_day.raw)
+
+
+ggplot(df_merged, aes(x = sum_of_steps_per_day.raw, y = sum_of_steps_per_day.imputed, color = Imputation))+
+    geom_abline(intercept = 1)+
+    geom_point()+
+    theme_bw()+
+    labs(title = &quot;Raw vs imputed daily sums of steps&quot;)+
+    theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<p><img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto auto auto 0;" /></p>
+<pre class="r"><code># Testing how many values of the sum of steps per day repeat in the imputed data set. These values were assigned in a process of imputation to days consisting only of NAs.  
+
+sum(df_merged$Imputation == &quot;Imputed daily value&quot;)</code></pre>
+<pre><code>## [1] 8</code></pre>
+<p>The only missing values in a data set occur over the entire 8 days. Therefore, the implemented method of data imputation did not have any effect on other days. This is represented by perfect correlation of the raw vs imputed sums of steps. The imputed missing days have a value of the overall mean sum of steps. To visualize them I arbitrarily assigned to them a value of 0 sum_of_steps_per_day.raw.</p>
+</div>
+</div>
+</div>
+<div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level1">
+<h1>5. Are there differences in activity patterns between weekdays and weekends?</h1>
+<p>For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.</p>
+<div id="create-a-new-factor-variable-in-the-dataset-with-two-levels-weekday-and-weekend-indicating-whether-a-given-date-is-a-weekday-or-weekend-day." class="section level2">
+<h2>5.1 Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.</h2>
+<pre class="r"><code>data_imp$weekday_type &lt;- factor(ifelse(weekdays(as.Date(data_imp$date)) %in% c(&quot;Saturday&quot;, &quot;Sunday&quot;), &quot;weekend&quot;, &quot;weekday&quot;))</code></pre>
+</div>
+<div id="make-a-panel-plot-containing-a-time-series-plot." class="section level2">
+<h2>5.2 Make a panel plot containing a time series plot.</h2>
+<pre class="r"><code>DT &lt;- data.table(data_imp)
+df &lt;- DT[, .(mean_steps = mean(steps)), by=list(interval, weekday_type)]
+
+ggplot(df, aes(x = interval, y = mean_steps))+
+    geom_point()+
+    geom_line()+
+    theme_bw()+
+    labs(title = &quot;Time series plot of the average number of steps taken across all days&quot;,
+         x = &quot;Interval&quot;, 
+         y = &quot;Mean steps per interval&quot;)+
+    theme(plot.title = element_text(hjust = 0.5))+
+    facet_grid(weekday_type ~.)</code></pre>
+<p><img src="PA1_template_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
